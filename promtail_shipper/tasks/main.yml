@@ -8,6 +8,3 @@
 
 - name: Run Docker Compose
   include_tasks: 3_Docker.yml
-
-# - name: test cofig
-#   include_tasks: test.yml
