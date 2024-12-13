@@ -1,0 +1,11 @@
+---
+
+- name: Run Docker Compose DOWN Command
+  ansible.builtin.command: docker-compose down
+  args:
+    chdir: ./promtail/
+
+- name: Run Docker Compose UP Command
+  ansible.builtin.command: docker-compose up -d
+  args:
+    chdir: ./promtail/

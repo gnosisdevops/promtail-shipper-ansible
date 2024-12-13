@@ -1,0 +1,5 @@
+- name: Moving Promtail Config Template File to Server
+  ansible.builtin.template:
+    src: "promtail_shipper/promtail_config_file.j2"
+    dest: "./promtail-config.yml"
+    mode: '0644'

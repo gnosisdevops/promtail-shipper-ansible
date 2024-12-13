@@ -1,0 +1,12 @@
+galaxy_info:
+  role_name: promtail_shipper
+  author: Gnosis
+  description: Promtail agent for logging scraping 
+  company: Gnosis
+  license: MIT
+  min_ansible_version: 2.8
+  galaxy_tags:
+    - monitoring
+    - logging
+
+dependencies: []

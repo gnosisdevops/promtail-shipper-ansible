@@ -1,0 +1,13 @@
+---
+
+- name: Installing Required Packages
+  include_tasks: 1_Installing_Requirements.yml
+
+- name: Move Promtail Config File to Server
+  include_tasks: 2_Promtail_Config_File.yml
+
+- name: Run Docker Compose
+  include_tasks: 3_Docker.yml
+
+# - name: test cofig
+#   include_tasks: test.yml

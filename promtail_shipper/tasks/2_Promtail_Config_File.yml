@@ -1,0 +1,21 @@
+---
+
+- name: Ensure Promtail directory exists
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - ./promtail
+    - ./promtail/config
+
+- name: Moving Promtail Docker Compose Template File to Server
+  ansible.builtin.template:
+    src: "promtail_shipper/docker_compose_file.j2"
+    dest: ./promtail/docker-compose.yml
+
+- name: Moving Promtail Config Template File to Server
+  ansible.builtin.template:
+    src: "promtail_shipper/promtail_config_file.j2"
+    dest: ./promtail/config/promtail-config.yml
+    mode: '0644'

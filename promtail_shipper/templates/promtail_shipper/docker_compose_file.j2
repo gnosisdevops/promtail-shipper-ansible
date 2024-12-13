@@ -1,0 +1,16 @@
+services:
+  promtail:
+    container_name: promtail
+    image: grafana/promtail:{{ promtail_version }}
+{% if time_zone_timestamp is defined %}
+    environment:
+      - TZ={{ time_zone_timestamp }}
+{% endif %}
+    ports:
+    - {{ promtail_http_listen_port }}:{{ promtail_http_listen_port }}
+    - {{ promtail_http_listen_port }}:{{ promtail_http_listen_port }}/udp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/promtail/config/promtail-config.yml:{{ promtail_config_path }}
+    command: -config.file={{ promtail_config_path }}
+    restart: unless-stopped

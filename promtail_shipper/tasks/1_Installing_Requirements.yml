@@ -1,0 +1,73 @@
+---
+
+- name: Check if Docker is installed
+  command: which docker
+  register: docker_check
+  ignore_errors: true
+
+- name: Check if Docker Compose is installed
+  command: which docker-compose
+  register: docker_compose_check
+  ignore_errors: true
+
+- name: Print Docker status
+  debug:
+    msg: >
+      Docker is {{ 'installed' if docker_check.rc == 0 else 'not installed' }}
+
+- name: Print Docker Compose status
+  debug:
+    msg: >
+      Docker Compose is {{ 'installed' if docker_compose_check.rc == 0 else 'not installed' }}
+
+- name: Install docker dependent packages
+  ansible.builtin.apt:
+    name: ['apt-transport-https','ca-certificates', 'curl', 'software-properties-common', 'python3-pip']
+    state: present
+    update_cache: yes
+  tags:
+    - docker
+  when: docker_check.rc != 0 and docker_compose_check.rc != 0
+
+- name: Add Docker GPG key for ubuntu from official site
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  tags:
+    - docker
+  when: docker_check.rc != 0 and docker_compose_check.rc != 0
+
+- name: Verify gpg key with the fingerprint
+  ansible.builtin.apt_key:
+    id: 0EBFCD88
+    state: present
+  tags:
+    - docker
+  when: docker_check.rc != 0 and docker_compose_check.rc != 0
+
+- name: Configure Docker for ubuntu stable repository
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+    state: present
+    update_cache: yes
+  tags:
+    - docker
+  when: docker_check.rc != 0 and docker_compose_check.rc != 0
+
+- name: Install docker-ce
+  ansible.builtin.apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+  tags:
+    - docker
+  when: docker_check.rc != 0 and docker_compose_check.rc != 0
+
+- name: Install docker-compose from official github repo
+  ansible.builtin.get_url:
+    url : https://github.com/docker/compose/releases/download/v2.19.0/docker-compose-linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 'u+x,g+x'
+  tags:
+    - docker
+  when: docker_check.rc != 0 and docker_compose_check.rc != 0
