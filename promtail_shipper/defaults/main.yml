@@ -18,3 +18,5 @@ promtail_scrape_configs:
         target_label: container
       - target_label: __address__
         replacement: localhost:8080
+      - target_label: host
+        replacement: ${HOSTNAME}
