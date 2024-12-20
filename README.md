@@ -64,7 +64,7 @@ Promtails default config path.
 ```yaml
 loki_url: http://localhost:3100/loki/api/v1/push
 ```
-Loki url which Promtail connects to. [All possible values for Loki `clients`](https://grafana.com/docs/loki/latest/clients/promtail/configuration/#clients).
+Loki url which Promtail connects to. [All possible values for Loki `clients`](https://grafana.com/docs/loki/latest/clients/promtail/configuration/#clients). ⚠️ This configuration is mandatory.
 
 ```yaml
 loki_username: []
@@ -74,7 +74,7 @@ loki_username: []
 loki_password: []
 ```
 
-Basic Auth used to access Loki endpoint
+Basic Auth used to access Loki endpoint. ⚠️ This configuration is mandatory.
 
 ```yaml
 promtail_scrape_configs:
