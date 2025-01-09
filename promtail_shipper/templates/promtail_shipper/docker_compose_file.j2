@@ -2,6 +2,8 @@ services:
   promtail:
     container_name: promtail
     image: grafana/promtail:{{ promtail_version }}
+    env_file:
+      - .env
 {% if time_zone_timestamp is defined %}
     environment:
       - TZ={{ time_zone_timestamp }}

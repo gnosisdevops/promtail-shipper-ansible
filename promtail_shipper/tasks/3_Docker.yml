@@ -5,6 +5,11 @@
   args:
     chdir: ./promtail/
 
+- name: Add hostname env var into service
+  ansible.builtin.command: echo "HOST=$(cat /etc/hostname)" > .env
+    args:
+      chdir: ./promtail/
+
 - name: Run Docker Compose UP Command
   ansible.builtin.command: docker-compose up -d
   args:
