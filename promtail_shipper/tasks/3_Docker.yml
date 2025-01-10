@@ -1,9 +1,10 @@
 ---
 
-- name: Add hostname env var into service
-  ansible.builtin.shell:
-    cmd: echo "HOST=$(cat /etc/hostname)" > .env
-    chdir: ./promtail/
+- name: Add hostname to .env
+  ansible.builtin.lineinfile:
+    path: ./promtail/.env
+    line: "HOST={{ ansible_hostname }}"
+    create: yes
 
 - name: Ensure .env file exists
   ansible.builtin.file:
