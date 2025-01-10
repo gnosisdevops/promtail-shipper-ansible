@@ -1,9 +1,14 @@
 ---
 
 - name: Add hostname env var into service
-  ansible.builtin.command: echo "HOST=$(cat /etc/hostname)" > .env
-  args:
+  ansible.builtin.shell:
+    cmd: echo "HOST=$(cat /etc/hostname)" > .env
     chdir: ./promtail/
+
+- name: Ensure .env file exists
+  ansible.builtin.file:
+    path: ./promtail/.env
+    state: file
 
 - name: Run Docker Compose DOWN Command
   ansible.builtin.command: docker-compose down
