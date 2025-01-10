@@ -14,5 +14,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/promtail/config/promtail-config.yml:{{ promtail_config_path }}
-    command: -config.file={{ promtail_config_path }}
+    command: -config.file={{ promtail_config_path }} -config.expand-env=true
     restart: unless-stopped
