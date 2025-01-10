@@ -3,7 +3,7 @@
 - name: Add hostname to .env
   ansible.builtin.lineinfile:
     path: ./promtail/.env
-    line: "HOST={{ ansible_hostname }}"
+    line: "HOST={{ inventory_hostname }}"
     create: yes
 
 - name: Ensure .env file exists
