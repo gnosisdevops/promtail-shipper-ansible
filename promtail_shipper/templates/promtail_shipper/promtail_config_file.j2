@@ -19,3 +19,8 @@ target_config:
 scrape_configs:
   {{ promtail_scrape_configs | to_nice_yaml(indent=2,sort_keys=False) | indent(2, False) }}
 {% endif %}
+{% if promtail_drop_time is defined %}
+    pipeline_stages:
+      - drop:
+          older_than: {{ promtail_drop_time }}
+{% endif %}
